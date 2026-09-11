@@ -1,5 +1,6 @@
 ---
-import { container, section, eyebrowDark, btnLight, inputLabelDark, input, formStatus } from "../lib/ui";
+import Contau from "./Contau.astro";
+import { container, section, eyebrowDark, btnLight, btnWa, btnGhost, inputLabelDark, input, formStatus } from "../lib/ui";
 ---
 <section class={`order-4 lg:order-5 ${section}`} id="guia">
   <div class={container}>
@@ -32,12 +33,55 @@ import { container, section, eyebrowDark, btnLight, inputLabelDark, input, formS
           <label class="hp" aria-hidden="true">No llenar<input type="checkbox" name="botcheck" tabindex="-1" /></label>
           <button class={`${btnLight} w-full`} type="submit" data-en="Send me the guide">Enviar mi guía</button>
         </div>
-        <div class={`${formStatus} bg-white/15 text-white`} role="status" aria-live="polite"></div>
+        <div class={`${formStatus} bg-[#fdeaea] text-[#9b1c1c]`} role="status" aria-live="polite"></div>
         <p class="mt-3 text-[0.8rem] text-white/60" data-en="We only use your email to send you the guide and information from Mi Conta Universal. You can unsubscribe at any time.">
           Solo usamos tu correo para enviarte la guía e información de Mi Conta
           Universal. Puedes darte de baja cuando quieras.
         </p>
       </form>
+    </div>
+  </div>
+
+  {/* Confirmacion de la guia: se abre al enviar con exito */}
+  <div
+    id="guia-modal"
+    class="fixed inset-0 z-[90] hidden items-center justify-center p-4"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="guia-modal-titulo"
+  >
+    <div class="absolute inset-0 bg-[var(--navy-900)]/70 backdrop-blur-sm" data-cerrar></div>
+
+    <div class="modal-panel relative w-full max-w-[460px] rounded-[28px] border border-[color:var(--border)] bg-white p-8 text-center shadow-[var(--shadow-lg)]">
+      <button
+        type="button"
+        data-cerrar
+        aria-label="Cerrar"
+        data-en-aria="Close"
+        class="absolute right-4 top-4 grid h-9 w-9 place-items-center rounded-full text-[var(--muted)] transition hover:bg-[var(--bg-2)] hover:text-[var(--navy)]"
+      >
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="h-5 w-5" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg>
+      </button>
+
+      <div class="mx-auto mb-5 w-28"><Contau uid="modal" /></div>
+
+      <h3 id="guia-modal-titulo" class="text-[1.4rem] font-extrabold text-[var(--navy-900)]" data-en="All set — we have your information">¡Listo! Ya tenemos tus datos</h3>
+
+      <p class="mt-3 text-[0.96rem] text-[var(--muted)]" data-en="We are sending the free guide to the email you gave us. If you do not see it in a few minutes, check your spam folder.">
+        Te enviamos la guía gratuita al correo que nos diste. Si no la ves en
+        unos minutos, revisa tu carpeta de spam.
+      </p>
+
+      <div class="mt-6 grid gap-2.5">
+        <a
+          class={`${btnWa} w-full`}
+          href="https://wa.me/15138270407?text=Hola%2C%20acabo%20de%20pedir%20la%20gu%C3%ADa%20gratuita%20y%20tengo%20una%20duda."
+          target="_blank"
+          rel="noopener"
+          data-en="Have a question? Message us"
+        >¿Tienes una duda? Escríbenos</a>
+        <button type="button" data-cerrar class={`${btnGhost} w-full`} data-en="Close">Cerrar</button>
+      </div>
     </div>
   </div>
 </section>

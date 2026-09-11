@@ -173,6 +173,15 @@ h1, h2, h3, h4 { font-family: var(--font-head); letter-spacing: -0.02em; }
   75%, 100% { transform: scale(1.9); opacity: 0; }
 }
 
+/* ---------- Modal de confirmacion ---------- */
+
+.modal-panel { animation: modal-in 0.35s cubic-bezier(0.22, 1, 0.36, 1) both; }
+@keyframes modal-in {
+  from { opacity: 0; transform: translateY(14px) scale(0.96); }
+  to { opacity: 1; transform: none; }
+}
+body.modal-abierto { overflow: hidden; }
+
 /* ---------- Formularios ---------- */
 
 .hp { position: absolute; left: -9999px; opacity: 0; }
@@ -187,6 +196,6 @@ h1, h2, h3, h4 { font-family: var(--font-head); letter-spacing: -0.02em; }
     transform: none !important;
     transition: none !important;
   }
-  .contau, .contau .contau-eyes, .faq-bubble, .wa-float::before { animation: none !important; }
+  .contau, .contau .contau-eyes, .faq-bubble, .modal-panel, .wa-float::before { animation: none !important; }
   html { scroll-behavior: auto; }
 }

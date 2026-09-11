@@ -23,6 +23,7 @@ const jsonLd = {
         "Contabilidad, nomina, reportes financieros, registro de negocios, licencias y asesoria para pequenos negocios en Cincinnati y en todo el estado de Ohio.",
       url: "https://micontau.com",
       telephone: "+1-513-827-0407",
+      email: "info@micontau.com",
       image: "https://micontau.com/logo.png",
       logo: "https://micontau.com/logo.png",
       address: {
@@ -238,9 +239,47 @@ const analyticsBootstrap = [
         });
       })();
 
+      /* ---------- Modal de confirmacion de la guia ---------- */
+      (function () {
+        var modal = document.getElementById("guia-modal");
+        if (!modal) return;
+        var ultimoFoco = null;
+
+        function abrir() {
+          ultimoFoco = document.activeElement;
+          modal.classList.remove("hidden");
+          modal.classList.add("flex");
+          document.body.classList.add("modal-abierto");
+          var foco = modal.querySelector("[data-cerrar]");
+          if (foco) foco.focus();
+        }
+
+        function cerrar() {
+          modal.classList.add("hidden");
+          modal.classList.remove("flex");
+          document.body.classList.remove("modal-abierto");
+          if (ultimoFoco && ultimoFoco.focus) ultimoFoco.focus();
+        }
+
+        modal.addEventListener("click", function (e) {
+          if (e.target.closest("[data-cerrar]")) cerrar();
+        });
+        document.addEventListener("keydown", function (e) {
+          if (e.key === "Escape" && !modal.classList.contains("hidden")) cerrar();
+        });
+
+        window.mcuAbrirModalGuia = abrir;
+      })();
+
       /* ---------- Formularios (Web3Forms) ---------- */
       (function () {
-        var ACCESS_KEY = "PENDIENTE-ACCESS-KEY-WEB3FORMS";
+        // Una llave por formulario, para separar los avisos en el buzon.
+        // En Web3Forms el correo destino va amarrado a la llave, no al codigo:
+        // para cambiar de buzon hay que generar otra llave, no editar esta linea.
+        var ACCESS_KEYS = {
+          contacto: "f72557cc-033a-45ea-a9d1-39d0e7eddcba",
+          guia_gratuita: "41a7567c-0b23-41d0-85c2-c8d8500fab0d",
+        };
         var MSG = {
           ok: {
             es: "Listo. Recibimos tus datos y te contactamos muy pronto.",
@@ -265,11 +304,20 @@ const analyticsBootstrap = [
             if (bot && bot.checked) return;
 
             status.classList.remove("is-ok", "is-error");
-            if (submit) { submit.disabled = true; submit.innerHTML = MSG.sending[lang]; }
+
+            var key = ACCESS_KEYS[form.dataset.w3f];
+            if (!key) {
+              status.classList.add("is-error");
+              status.textContent = MSG.error[lang];
+              return;
+            }
 
             var data = Object.fromEntries(new FormData(form).entries());
-            data.access_key = ACCESS_KEY;
+            data.access_key = key;
+            if (submit) { submit.disabled = true; submit.innerHTML = MSG.sending[lang]; }
             data.from_name = "micontau.com";
+            // Para poder responderle directo al visitante desde el correo
+            if (data.correo) data.replyto = data.correo;
             data.idioma_del_visitante = lang;
 
             fetch("https://api.web3forms.com/submit", {
@@ -280,9 +328,13 @@ const analyticsBootstrap = [
               .then(function (r) { return r.json(); })
               .then(function (r) {
                 if (!r.success) throw new Error("web3forms");
-                status.classList.add("is-ok");
-                status.textContent = MSG.ok[lang];
                 form.reset();
+                if (form.dataset.w3f === "guia_gratuita" && window.mcuAbrirModalGuia) {
+                  window.mcuAbrirModalGuia();
+                } else {
+                  status.classList.add("is-ok");
+                  status.textContent = MSG.ok[lang];
+                }
                 if (window.fbq) window.fbq("track", "Lead");
                 if (window.gtag) window.gtag("event", "generate_lead", { origen: form.dataset.w3f });
               })
