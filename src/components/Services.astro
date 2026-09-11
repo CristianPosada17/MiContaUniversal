@@ -1,0 +1,74 @@
+---
+import { container, section, eyebrow, h2, lead, card, cardIcon } from "../lib/ui";
+
+const services = [
+  {
+    icon: '<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"/><path d="M9 7h7M9 11h5"/>',
+    es: ["Bookkeeping y Contabilidad", "Contabilidad organizada para pequeños negocios, contratistas, construcción, tiendas, restaurantes y otros comercios."],
+    en: ["Bookkeeping &amp; Accounting", "Organized books for small businesses, contractors, construction, stores, restaurants and other trades."],
+  },
+  {
+    icon: '<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>',
+    es: ["Payroll", "Procesamiento de nómina y organización de registros de empleados."],
+    en: ["Payroll", "Payroll processing and organized employee records."],
+  },
+  {
+    icon: '<path d="M3 3v18h18"/><rect x="7" y="12" width="3" height="6" rx="1"/><rect x="12.5" y="8" width="3" height="10" rx="1"/><rect x="18" y="4.5" width="3" height="13.5" rx="1"/>',
+    es: ["Reportes Financieros", "Reportes claros para conocer los ingresos, gastos y resultados de tu negocio."],
+    en: ["Financial Reporting", "Clear reports so you know your income, expenses and results."],
+  },
+  {
+    icon: '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/><path d="m9 15 2 2 4-4"/>',
+    es: ["Organización para Impuestos", "Organización de tus registros contables para facilitar la preparación de impuestos."],
+    en: ["Tax-Ready Records", "Your accounting records organized to make tax preparation straightforward."],
+  },
+  {
+    icon: '<circle cx="11" cy="11" r="7"/><path d="m20 20-3.2-3.2M8.5 11h5M11 8.5v5"/>',
+    es: ["Asistencia en Auditorías", "Apoyo para organizar documentos, registros y reportes necesarios durante una auditoría."],
+    en: ["Audit Support", "Support organizing the documents, records and reports an audit requires."],
+  },
+  {
+    icon: '<path d="M3 21h18M5 21V8l7-5 7 5v13"/><path d="M10 21v-6h4v6"/>',
+    es: ["Registro de Negocios", "Asistencia con la formación, registro y documentación de tu empresa."],
+    en: ["Business Registration", "Help with forming, registering and documenting your company."],
+  },
+  {
+    icon: '<path d="M9 12.5 11 14.5 15.5 10"/><path d="M12 2 4 5v6c0 5 3.4 9.4 8 11 4.6-1.6 8-6 8-11V5Z"/>',
+    es: ["Licencias y Permisos", "Asistencia con licencias, permisos y documentación necesaria para operar tu negocio."],
+    en: ["Licenses &amp; Permits", "Help with the licenses, permits and paperwork your business needs to operate."],
+  },
+  {
+    icon: '<path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M10 22h4"/>',
+    es: ["Asesoría para Pequeños Negocios", "Apoyo práctico para organizar mejor tus finanzas y tomar decisiones para el crecimiento de tu negocio."],
+    en: ["Small Business Consulting", "Practical support to organize your finances and make decisions that grow your business."],
+  },
+];
+---
+<section class={`order-3 ${section}`} id="servicios">
+  <div class={container}>
+    <div class="reveal mx-auto mb-12 max-w-[720px] text-center">
+      <span class={eyebrow} data-en="Our services">Nuestros servicios</span>
+      <h2 class={h2} data-en="Everything your business needs, <span class='grad'>in one place</span>">
+        Todo lo que tu negocio necesita, <span class="grad">en un solo lugar</span>
+      </h2>
+      <p class={lead} data-en="From the day-to-day books to registering your company: we take care of the numbers and the paperwork so you can focus on running your business.">
+        Desde el registro diario de tus operaciones hasta la formación de tu
+        empresa: nos encargamos de los números y de los trámites para que tú te
+        dediques a tu negocio.
+      </p>
+    </div>
+
+    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+      {services.map((s, i) => (
+        <article class={`${card} reveal`} style={`--reveal-delay:${(i % 4) * 70}ms`}>
+          <span class="absolute inset-x-0 top-0 h-[3px] bg-[linear-gradient(90deg,var(--navy-600),var(--green-500))] opacity-0 transition group-hover:opacity-100"></span>
+          <div class={cardIcon}>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6" aria-hidden="true" set:html={s.icon} />
+          </div>
+          <h3 class="mb-2 text-[1.08rem] font-extrabold text-[var(--text)]" data-en={s.en[0]} set:html={s.es[0]} />
+          <p class="text-[0.94rem] text-[var(--muted)]" data-en={s.en[1]} set:html={s.es[1]} />
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

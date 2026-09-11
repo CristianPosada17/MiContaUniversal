@@ -1,0 +1,43 @@
+---
+import { container, section, eyebrowDark, btnLight, inputLabelDark, input, formStatus } from "../lib/ui";
+---
+<section class={`order-4 lg:order-5 ${section}`} id="guia">
+  <div class={container}>
+    <div class="reveal reveal-scale relative grid gap-8 overflow-hidden rounded-[28px] bg-[linear-gradient(125deg,var(--navy-900)_0%,var(--navy)_45%,var(--green-900)_100%)] p-9 text-white shadow-[var(--shadow-lg)] lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:p-14">
+      <span class="pointer-events-none absolute -left-44 -top-56 h-[420px] w-[420px] rounded-full bg-white/[0.07]"></span>
+
+      <div class="relative">
+        <span class={eyebrowDark} data-en="Free guide">Guía gratuita</span>
+        <h2 class="text-[clamp(1.6rem,3.2vw,2.2rem)] font-extrabold leading-[1.15] text-white" data-en="Get our free guide <span class='grad-light'>for small businesses</span>">
+          Recibe nuestra guía gratuita <span class="grad-light">para pequeños negocios</span>
+        </h2>
+        <p class="mt-4 text-white/85" data-en="Leave us your name and email and we will send it to you. No cost, no commitment &mdash; and if you have a question afterwards, you can reply to that same email.">
+          Déjanos tu nombre y tu correo y te la enviamos. Sin costo y sin
+          compromiso &mdash; y si después te queda una duda, puedes responder a
+          ese mismo correo.
+        </p>
+      </div>
+
+      <form class="relative" data-w3f="guia_gratuita" novalidate>
+        <div class="grid gap-3">
+          <div class="grid gap-1.5">
+            <label class={inputLabelDark} for="guia-nombre" data-en="Name">Nombre</label>
+            <input class={input} id="guia-nombre" name="nombre" type="text" required autocomplete="name" placeholder="Tu nombre" data-en-ph="Your name" />
+          </div>
+          <div class="grid gap-1.5">
+            <label class={inputLabelDark} for="guia-email" data-en="Email">Correo electrónico</label>
+            <input class={input} id="guia-email" name="correo" type="email" required autocomplete="email" placeholder="tucorreo@ejemplo.com" data-en-ph="you@example.com" />
+          </div>
+          <input type="hidden" name="subject" value="Nueva descarga de la guia gratuita - micontau.com" />
+          <label class="hp" aria-hidden="true">No llenar<input type="checkbox" name="botcheck" tabindex="-1" /></label>
+          <button class={`${btnLight} w-full`} type="submit" data-en="Send me the guide">Enviar mi guía</button>
+        </div>
+        <div class={`${formStatus} bg-white/15 text-white`} role="status" aria-live="polite"></div>
+        <p class="mt-3 text-[0.8rem] text-white/60" data-en="We only use your email to send you the guide and information from Mi Conta Universal. You can unsubscribe at any time.">
+          Solo usamos tu correo para enviarte la guía e información de Mi Conta
+          Universal. Puedes darte de baja cuando quieras.
+        </p>
+      </form>
+    </div>
+  </div>
+</section>

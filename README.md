@@ -1,46 +1,61 @@
-# Astro Starter Kit: Basics
+# Mi Conta Universal — micontau.com
 
-```sh
-npm create astro@latest -- --template basics
+Landing page bilingüe (ES/EN) para Mi Conta Universal · Cincinnati, OH.
+Cliente: José Miranda · Proyecto ProCode Dev.
+
+## Correr el proyecto
+
+```bash
+npm install
+npm run dev      # http://localhost:4321
+npm run build    # genera dist/
+npm run preview
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+> El `node_modules` está instalado con binarios nativos de Windows. El build
+> corre en Windows, no dentro de una VM Linux.
 
-## 🚀 Project Structure
+## Estructura
 
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src
-│   ├── assets
-│   │   └── astro.svg
-│   ├── components
-│   │   └── Welcome.astro
-│   ├── layouts
-│   │   └── Layout.astro
-│   └── pages
-│       └── index.astro
-└── package.json
+```
+src/
+├─ styles/global.css      Tailwind + tokens de marca (:root) + animaciones
+├─ lib/ui.ts              recetas de clases compartidas (botones, cards, inputs)
+├─ layouts/Layout.astro   <head> SEO, hreflang, OG, JSON-LD, scripts globales
+├─ components/            Header, Hero, ValueStrip, Services, About, Guide,
+│                         Faq, Contact, Footer, WhatsAppFloat, Contau
+└─ pages/index.astro      composición de la página
+public/                   logo, isotipo, favicon, apple-touch-icon, og-image,
+                          robots.txt, sitemap.xml, site.webmanifest
 ```
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+## Marca
 
-## 🧞 Commands
+La paleta sale del logo del cliente:
 
-All commands are run from the root of the project, from a terminal:
+| Token | Valor |
+|---|---|
+| `--navy-900` → `--navy-600` | `#062748` → `#16457C` |
+| `--green-900` → `--green-500` | `#045C2C` → `#17A34A` |
+| Títulos | Montserrat |
+| Cuerpo | Inter |
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+## Bilingüe
 
-## 👀 Want to learn more?
+No hay rutas `/es` y `/en`. El español va en el HTML y el inglés en atributos:
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+- `data-en="..."` — contenido (admite markup, con comillas simples)
+- `data-en-ph="..."` — placeholder de inputs
+- `data-en-aria="..."` — aria-label
+
+Un script en `Layout.astro` cambia el idioma sin recargar, también el `<title>` y
+la meta description. Recuerda la elección en `localStorage` y respeta `?lang=en`.
+
+## Antes de publicar
+
+- [ ] `ACCESS_KEY` de Web3Forms en el script de formularios de `Layout.astro`
+- [ ] `GA_MEASUREMENT_ID`, `META_PIXEL_ID`, `GSC_VERIFICATION` en el frontmatter de `Layout.astro`
+- [ ] PDF de la guía gratuita (sin él, la sección "Guía gratuita" no debe publicarse)
+- [ ] Enlace de Instagram en `Footer.astro`
+- [ ] Revisión del copy en inglés por parte del cliente
+- [ ] QA: que en todo el sitio solo aparezca el 513-827-0407

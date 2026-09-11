@@ -1,0 +1,75 @@
+---
+import { container, lead, btnWa, btnGhost } from "../lib/ui";
+
+const facts = [
+  {
+    icon: "pin",
+    es: ["Cincinnati &middot; todo Ohio", "1238 W Kemper Rd, Cincinnati, OH 45240"],
+    en: ["Cincinnati &middot; all of Ohio", "1238 W Kemper Rd, Cincinnati, OH 45240"],
+  },
+  {
+    icon: "clock",
+    es: ["Lunes a viernes", "9:00 a. m. &ndash; 8:00 p. m. (hora del Este)"],
+    en: ["Monday to Friday", "9:00 AM &ndash; 8:00 PM (Eastern Time)"],
+  },
+];
+---
+<section class="order-1 relative overflow-hidden border-b border-[color:var(--border)] bg-[radial-gradient(1100px_460px_at_78%_-10%,rgba(23,163,74,.14),transparent_65%),radial-gradient(900px_420px_at_8%_0%,rgba(10,54,96,.13),transparent_62%),linear-gradient(180deg,#fbfdff_0%,#ffffff_68%)] pb-20 pt-16 lg:pb-24" id="inicio">
+  <div class={`${container} grid items-center gap-12 lg:grid-cols-[1.08fr_0.92fr] lg:gap-16`}>
+    <div class="reveal">
+      <h1
+        class="text-[clamp(2.45rem,5.1vw,3.65rem)] font-extrabold leading-[1.08] tracking-[-0.032em] max-lg:text-center"
+        data-en="Bookkeeping and consulting for <span class='grad'>small businesses in Ohio</span>"
+      >Contabilidad y asesoría para <span class="grad">pequeños negocios en Ohio</span></h1>
+
+      <p
+        class={`${lead} max-w-[580px] text-[1.12rem] max-lg:mx-auto max-lg:text-center`}
+        data-en="We keep your books current and handle the paperwork with you: payroll, financial reporting, business registration, licenses and permits. In Cincinnati and across Ohio, in English and Spanish."
+      >Llevamos tus números al día y te acompañamos en los trámites: nómina, reportes financieros, registro de negocios, licencias y permisos. En Cincinnati y en todo Ohio, en español y en inglés.</p>
+
+      <div class="mt-8 flex flex-wrap gap-3 max-lg:flex-col max-lg:items-center">
+        <a class={`${btnWa} max-lg:w-full max-lg:max-w-[320px]`} href="https://wa.me/15138270407?text=Hola%2C%20quiero%20informaci%C3%B3n%20sobre%20sus%20servicios%20de%20contabilidad." target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor" class="h-[18px] w-[18px]" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.46 1.32 4.96L2 22l5.25-1.38a9.87 9.87 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2zm5.43 12.38c-.3-.15-1.75-.86-2.02-.96-.27-.1-.47-.15-.67.15-.2.3-.77.96-.94 1.16-.17.2-.35.22-.65.08-.3-.15-1.25-.46-2.38-1.47-.88-.78-1.47-1.75-1.64-2.05-.17-.3-.02-.46.13-.6.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.61-.92-2.2-.24-.58-.48-.5-.67-.51h-.57c-.2 0-.52.07-.79.37s-1.04 1.01-1.04 2.48 1.06 2.87 1.21 3.07c.15.2 2.09 3.2 5.07 4.49.71.3 1.26.49 1.69.63.71.22 1.36.19 1.87.12.57-.09 1.75-.72 2-1.41.25-.69.25-1.29.17-1.41-.07-.12-.27-.2-.57-.35z"/></svg>
+          <span data-en="Message us on WhatsApp">Escríbenos por WhatsApp</span>
+        </a>
+        <a class={`${btnGhost} max-lg:w-full max-lg:max-w-[320px]`} href="#contacto" data-en="Request your consultation">Solicita tu consulta</a>
+      </div>
+
+      <div class="mt-6 flex items-center gap-2.5 text-[0.9rem] text-[var(--muted)] max-lg:justify-center max-lg:text-center">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" class="h-[18px] w-[18px] shrink-0 text-[var(--green-500)]" aria-hidden="true"><path d="m9 12 2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg>
+        <span data-en="We answer in English and Spanish &middot; Mon to Fri, 9 AM to 8 PM ET">Te atendemos en español e inglés &middot; Lunes a viernes, 9 a. m. a 8 p. m.</span>
+      </div>
+    </div>
+
+    <div class="reveal reveal-right flex justify-center lg:justify-end" style="--reveal-delay:140ms">
+      <div class="w-full max-w-[420px] rounded-[28px] lg:max-w-[470px] border border-[color:var(--border)] bg-white p-7 shadow-[var(--shadow-lg)]">
+        <img src="/logo.png" alt="Mi Conta Universal — Contabilidad, Bookkeeping y Negocios" width="760" height="821" class="mx-auto mb-4 max-w-[250px]" />
+        <div class="my-5 h-px bg-[var(--border)]"></div>
+        <div class="grid gap-4">
+          {facts.map((f) => (
+            <div class="flex items-start gap-3">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" class="mt-0.5 h-5 w-5 shrink-0 text-[var(--green)]" aria-hidden="true">
+                {f.icon === "pin" ? (
+                  <><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></>
+                ) : (
+                  <><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></>
+                )}
+              </svg>
+              <div>
+                <b class="block font-[family-name:var(--font-head)] text-[0.92rem] font-extrabold text-[var(--navy-900)]" data-en={f.en[0]} set:html={f.es[0]} />
+                <span class="text-[0.86rem] text-[var(--muted)]" data-en={f.en[1]} set:html={f.es[1]} />
+              </div>
+            </div>
+          ))}
+          <div class="flex items-start gap-3">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" class="mt-0.5 h-5 w-5 shrink-0 text-[var(--green)]" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.09 4.18 2 2 0 0 1 4.08 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92Z"/></svg>
+            <div>
+              <b class="block font-[family-name:var(--font-head)] text-[0.92rem] font-extrabold text-[var(--navy-900)]" data-en="Call or WhatsApp">Llamada o WhatsApp</b>
+              <a href="tel:+15138270407" class="text-[0.86rem] font-semibold text-[var(--navy-900)] hover:text-[var(--green)]">+1 (513) 827-0407</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

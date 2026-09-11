@@ -1,0 +1,71 @@
+---
+import { container, section, eyebrow, h2, lead } from "../lib/ui";
+
+const points = [
+  {
+    es: ["Contabilidad al día, no al final del año", "Tus números organizados mes con mes, para que no haya sorpresas."],
+    en: ["Books kept current, not once a year", "Your numbers organized month by month, so there are no surprises."],
+  },
+  {
+    es: ["Reportes que sí se entienden", "Te explicamos qué significa cada cifra y qué implica para tus decisiones."],
+    en: ["Reports you can actually read", "We explain what each number means and what it means for your decisions."],
+  },
+  {
+    es: ["Acompañamiento en cada trámite", "Registro, licencias, permisos y auditorías &mdash; no lo haces solo."],
+    en: ["Guidance through every filing", "Registration, licenses, permits and audits &mdash; you are not on your own."],
+  },
+];
+
+const audience = [
+  { es: ["Contratistas", "y construcción"], en: ["Contractors", "and construction"] },
+  { es: ["Restaurantes", "y servicio de comida"], en: ["Restaurants", "and food service"] },
+  { es: ["Tiendas", "y comercios"], en: ["Retail stores", "and retail"] },
+  { es: ["Servicios", "y negocios nuevos"], en: ["Services", "and new businesses"] },
+];
+---
+<section class={`order-5 lg:order-4 ${section} bg-[var(--bg-2)]`} id="nosotros">
+  <div class={`${container} grid items-center gap-11 lg:grid-cols-2`}>
+    <div class="reveal reveal-left">
+      <span class={eyebrow} data-en="About Mi Conta Universal">Sobre Mi Conta Universal</span>
+      <h2 class={h2} data-en="With you, <span class='grad'>at every step of your business</span>">
+        Contigo, <span class="grad">en cada paso de tu negocio</span>
+      </h2>
+      <p class={lead} data-en="Mi Conta Universal helps small businesses in Ohio keep their books current, meet their obligations and actually understand their numbers. From the day-to-day records to registering your company, the licenses and the consulting to grow: one place for the administrative side of your business.">
+        Mi Conta Universal acompaña a pequeños negocios de Ohio a llevar su
+        contabilidad al día, cumplir con sus obligaciones y entender sus números
+        sin tecnicismos. Desde el registro diario de tus operaciones hasta la
+        formación de tu empresa, las licencias y la asesoría para crecer: un solo
+        lugar para todo lo administrativo de tu negocio.
+      </p>
+
+      <div class="mt-7 grid gap-4">
+        {points.map((p) => (
+          <div class="flex gap-3.5">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" class="mt-1 h-5 w-5 shrink-0 text-[var(--green)]" aria-hidden="true"><path d="m9 12 2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg>
+            <div>
+              <b class="block font-[family-name:var(--font-head)] font-extrabold text-[var(--navy-900)]" data-en={p.en[0]} set:html={p.es[0]} />
+              <span class="text-[0.94rem] text-[var(--muted)]" data-en={p.en[1]} set:html={p.es[1]} />
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <div class="reveal reveal-right relative overflow-hidden rounded-[28px] bg-[linear-gradient(150deg,var(--navy-900)_0%,var(--navy)_46%,var(--green)_100%)] p-9 text-white shadow-[var(--shadow-lg)] lg:p-11">
+      <span class="pointer-events-none absolute -bottom-36 -right-28 h-[340px] w-[340px] rounded-full bg-white/[0.08]"></span>
+      <h3 class="relative text-[1.5rem] font-extrabold" data-en="Who we work with">Con quién trabajamos</h3>
+      <p class="relative mt-3 text-white/80" data-en="Small businesses and trades that need their numbers in order and their paperwork on time.">
+        Pequeños negocios y comercios que necesitan sus números en orden y sus
+        trámites al día.
+      </p>
+      <div class="relative mt-7 grid grid-cols-2 gap-4">
+        {audience.map((a) => (
+          <div class="rounded-xl border border-white/20 bg-white/10 p-4">
+            <b class="block font-[family-name:var(--font-head)] text-[1.02rem] font-extrabold text-white" data-en={a.en[0]} set:html={a.es[0]} />
+            <span class="text-[0.8rem] text-white/75" data-en={a.en[1]} set:html={a.es[1]} />
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>

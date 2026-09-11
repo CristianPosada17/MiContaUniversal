@@ -1,0 +1,89 @@
+---
+import { container, btnPrimary } from "../lib/ui";
+
+const links = [
+  { href: "#servicios", es: "Servicios", en: "Services" },
+  { href: "#nosotros", es: "Nosotros", en: "About us" },
+  { href: "#guia", es: "Guía gratuita", en: "Free guide", highlight: true },
+  { href: "#preguntas", es: "Preguntas", en: "FAQ" },
+  { href: "#contacto", es: "Contacto", en: "Contact" },
+];
+
+const navLink =
+  "whitespace-nowrap text-[0.92rem] font-semibold text-[var(--muted)] transition hover:text-[var(--navy)]";
+
+const navChip =
+  "inline-flex items-center gap-2 whitespace-nowrap rounded-full border border-[color:var(--green-500)] bg-[var(--green-500)]/10 px-4 py-2 text-[0.9rem] font-bold text-[var(--green)] transition hover:bg-[var(--green-500)] hover:text-white";
+---
+<header class="sticky top-0 z-50 border-b border-[color:var(--border)] bg-white/90 backdrop-blur-xl">
+  <div class={`${container} flex h-[var(--header-h)] items-center gap-5`}>
+    <a class="flex shrink-0 items-center gap-3" href="#inicio" aria-label="Mi Conta Universal">
+      <img src="/logo-book.png" alt="Mi Conta Universal" width="420" height="276" class="h-11 w-auto" />
+      <span class="hidden leading-tight sm:block">
+        <b class="block font-[family-name:var(--font-head)] text-[1rem] font-extrabold text-[var(--navy-900)]">Mi Conta Universal</b>
+        <span
+          class="text-[0.68rem] font-bold uppercase tracking-[0.13em] text-[var(--green)]"
+          data-en="Accounting &middot; Bookkeeping &middot; Business"
+        >Contabilidad &middot; Bookkeeping &middot; Negocios</span>
+      </span>
+    </a>
+
+    <nav class="mx-auto hidden items-center gap-6 lg:flex xl:gap-8" aria-label="Principal">
+      {links.map((l) =>
+        l.highlight ? (
+          <a href={l.href} data-en={l.en} class={navChip}>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" class="h-[17px] w-[17px] shrink-0" aria-hidden="true"><rect x="3" y="8" width="18" height="13" rx="2"/><path d="M3 13h18M12 8v13"/><path d="M12 8S9.5 3.5 7.5 4.2 6.3 8 8 8h4Zm0 0s2.5-4.5 4.5-3.8S17.7 8 16 8h-4Z"/></svg>
+            {l.es}
+          </a>
+        ) : (
+          <a href={l.href} data-en={l.en} class={navLink}>{l.es}</a>
+        )
+      )}
+    </nav>
+
+    <div class="ml-auto flex shrink-0 items-center gap-3 lg:ml-0">
+      <div class="inline-flex rounded-full border border-[color:var(--border-strong)] bg-white p-1" role="group" aria-label="Idioma / Language">
+        <button type="button" data-lang="es" aria-pressed="true" class="rounded-full px-3 py-1.5 font-[family-name:var(--font-head)] text-[0.76rem] font-extrabold tracking-wider text-white transition bg-[linear-gradient(120deg,var(--navy),var(--green))]">ES</button>
+        <button type="button" data-lang="en" aria-pressed="false" class="rounded-full px-3 py-1.5 font-[family-name:var(--font-head)] text-[0.76rem] font-extrabold tracking-wider text-[var(--muted)] transition hover:text-[var(--navy)]">EN</button>
+      </div>
+
+      <a
+        class={`${btnPrimary} hidden whitespace-nowrap lg:inline-flex`}
+        href="https://wa.me/15138270407"
+        target="_blank"
+        rel="noopener"
+        data-en="Free consultation"
+      >Consulta gratis</a>
+
+      <button
+        id="burger"
+        type="button"
+        aria-expanded="false"
+        aria-controls="mobile-nav"
+        aria-label="Menú"
+        data-en-aria="Menu"
+        class="flex h-11 w-11 flex-col items-center justify-center gap-[5px] rounded-xl border border-[color:var(--border-strong)] bg-white px-2.5 lg:hidden"
+      >
+        <span class="h-0.5 w-full rounded bg-[var(--navy)]"></span>
+        <span class="h-0.5 w-full rounded bg-[var(--navy)]"></span>
+        <span class="h-0.5 w-full rounded bg-[var(--navy)]"></span>
+      </button>
+    </div>
+  </div>
+
+  <div id="mobile-nav" class="hidden border-t border-[color:var(--border)] bg-white pb-6 lg:hidden">
+    <div class={container}>
+      {links.map((l) =>
+        l.highlight ? (
+          <a href={l.href} data-en={l.en} class={`${navChip} my-3 w-full justify-center py-3`}>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" class="h-[17px] w-[17px] shrink-0" aria-hidden="true"><rect x="3" y="8" width="18" height="13" rx="2"/><path d="M3 13h18M12 8v13"/><path d="M12 8S9.5 3.5 7.5 4.2 6.3 8 8 8h4Zm0 0s2.5-4.5 4.5-3.8S17.7 8 16 8h-4Z"/></svg>
+            {l.es}
+          </a>
+        ) : (
+          <a href={l.href} data-en={l.en} class="block border-b border-[color:var(--border)] py-3 font-semibold text-[var(--navy)]">{l.es}</a>
+        )
+      )}
+      <a class={`${btnPrimary} mt-5 w-full`} href="https://wa.me/15138270407" target="_blank" rel="noopener" data-en="Free consultation">Consulta gratis</a>
+    </div>
+  </div>
+</header>

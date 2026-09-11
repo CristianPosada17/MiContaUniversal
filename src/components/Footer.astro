@@ -1,0 +1,63 @@
+---
+import { container } from "../lib/ui";
+
+const links = [
+  { href: "#servicios", es: "Servicios", en: "Services" },
+  { href: "#nosotros", es: "Nosotros", en: "About us" },
+  { href: "#guia", es: "Guía gratuita", en: "Free guide" },
+  { href: "#preguntas", es: "Preguntas", en: "FAQ" },
+  { href: "#contacto", es: "Contacto", en: "Contact" },
+];
+---
+<footer class="bg-[var(--navy-900)] pb-24 pt-14 text-white/70 sm:pb-10">
+  <div class={`${container} grid gap-9 lg:grid-cols-[1.3fr_0.8fr_1fr]`}>
+    <div>
+      <img src="/logo.png" alt="Mi Conta Universal" width="760" height="821" class="max-w-[210px] rounded-2xl bg-white p-3" />
+      <p class="mt-4 max-w-[320px] text-[0.92rem]" data-en="Bookkeeping, payroll and business consulting for small businesses in Cincinnati and across Ohio.">
+        Contabilidad, nómina y asesoría para pequeños negocios en Cincinnati y en
+        todo el estado de Ohio.
+      </p>
+      <div class="mt-4 flex gap-2.5">
+        <a href="https://www.facebook.com/share/1BkY8GzJZJ/" target="_blank" rel="noopener" aria-label="Facebook" class="grid h-10 w-10 place-items-center rounded-xl border border-white/20 text-white transition hover:border-[var(--green)] hover:bg-[var(--green)]">
+          <svg viewBox="0 0 24 24" fill="currentColor" class="h-[19px] w-[19px]" aria-hidden="true"><path d="M14 9h3l.5-3H14V4.5c0-.9.3-1.5 1.6-1.5H17.6V.2C17.3.1 16.2 0 14.9 0 12.2 0 10.4 1.6 10.4 4.2V6H7.5v3h2.9v9H14V9Z"/></svg>
+        </a>
+        <a href="https://wa.me/15138270407" target="_blank" rel="noopener" aria-label="WhatsApp" class="grid h-10 w-10 place-items-center rounded-xl border border-white/20 text-white transition hover:border-[var(--green)] hover:bg-[var(--green)]">
+          <svg viewBox="0 0 24 24" fill="currentColor" class="h-[19px] w-[19px]" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.46 1.32 4.96L2 22l5.25-1.38a9.87 9.87 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2zm5.43 12.38c-.3-.15-1.75-.86-2.02-.96-.27-.1-.47-.15-.67.15-.2.3-.77.96-.94 1.16-.17.2-.35.22-.65.08-.3-.15-1.25-.46-2.38-1.47-.88-.78-1.47-1.75-1.64-2.05-.17-.3-.02-.46.13-.6.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.61-.92-2.2-.24-.58-.48-.5-.67-.51h-.57c-.2 0-.52.07-.79.37s-1.04 1.01-1.04 2.48 1.06 2.87 1.21 3.07c.15.2 2.09 3.2 5.07 4.49.71.3 1.26.49 1.69.63.71.22 1.36.19 1.87.12.57-.09 1.75-.72 2-1.41.25-.69.25-1.29.17-1.41-.07-.12-.27-.2-.57-.35z"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <div>
+      <h4 class="mb-3.5 text-[0.8rem] font-extrabold uppercase tracking-[0.14em] text-white" data-en="Site">Sitio</h4>
+      <div class="grid gap-2.5">
+        {links.map((l) => (
+          <a href={l.href} data-en={l.en} class="text-[0.92rem] transition hover:text-[var(--green-500)]">{l.es}</a>
+        ))}
+      </div>
+    </div>
+
+    <div>
+      <h4 class="mb-3.5 text-[0.8rem] font-extrabold uppercase tracking-[0.14em] text-white" data-en="Contact">Contacto</h4>
+      <div class="grid gap-2.5 text-[0.92rem]">
+        <a href="tel:+15138270407" class="transition hover:text-[var(--green-500)]">+1 (513) 827-0407</a>
+        <span>1238 W Kemper Rd<br />Cincinnati, OH 45240</span>
+        <span data-en="Monday to Friday, 9 AM &ndash; 8 PM ET">Lunes a viernes, 9 a. m. &ndash; 8 p. m. (ET)</span>
+      </div>
+    </div>
+  </div>
+
+  <div class={container}>
+    <div class="mt-10 flex flex-wrap justify-between gap-2.5 border-t border-white/10 pt-5 text-[0.82rem] text-white/55">
+      <span>&copy; 2026 Mi Conta Universal. <span data-en="All rights reserved.">Todos los derechos reservados.</span></span>
+      <span>
+        <span data-en="Website developed by">Sitio desarrollado por</span>{" "}
+        <a
+          href="https://procodedev.com"
+          target="_blank"
+          rel="noopener"
+          class="font-bold text-white transition hover:text-[var(--green-500)]"
+        >ProCode</a>
+      </span>
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,166 @@
+---
+import Contau from "./Contau.astro";
+import { container, section, eyebrow, h2, lead } from "../lib/ui";
+
+// Las preguntas estan redactadas como las escribe alguien en Google, no como
+// las escribiria el negocio. Cada respuesta arranca con la respuesta directa
+// para que Google pueda tomarla como fragmento destacado.
+// Datos verificados en sep 2026: cuota LLC de Ohio ($99, sin reporte anual),
+// vendor's license ($25, Ohio Business Gateway), linea 7b del Formulario SS-4
+// y los plazos de conservacion de documentos del IRS. Revisar cada ano.
+const faqs = [
+  {
+    es: [
+      "¿Cuánto cuesta el bookkeeping para un negocio pequeño?",
+      "Depende del volumen: cuántas transacciones maneja tu negocio al mes, cuántas cuentas de banco y tarjetas hay que conciliar, y si necesitas nómina. La mayoría de los negocios pequeños trabaja con una cuota mensual fija, no por hora. Te damos una cotización sin costo después de revisar tus números.",
+    ],
+    en: [
+      "How much does bookkeeping cost for a small business?",
+      "It depends on volume: how many transactions your business has each month, how many bank and credit card accounts need reconciling, and whether you need payroll. Most small businesses work on a flat monthly fee rather than an hourly rate. We quote you at no cost after reviewing your numbers.",
+    ],
+  },
+  {
+    es: [
+      "¿Cuál es la diferencia entre bookkeeping y contabilidad?",
+      "El bookkeeping es el registro diario: lo que entra, lo que sale, las facturas y la conciliación de cuentas. La contabilidad usa esos registros para armar reportes, interpretar resultados y preparar lo que necesitas para impuestos. Uno alimenta al otro: sin registros al día, los reportes no sirven.",
+    ],
+    en: [
+      "What is the difference between bookkeeping and accounting?",
+      "Bookkeeping is the day-to-day record: money in, money out, invoices and account reconciliation. Accounting uses those records to build reports, interpret results and prepare what you need for taxes. One feeds the other — without current records, the reports are worthless.",
+    ],
+  },
+  {
+    es: [
+      "¿Cuánto cuesta abrir un LLC en Ohio?",
+      "La cuota estatal para presentar los Articles of Organization ante el Secretario de Estado de Ohio es de $99. Ohio no pide reporte anual, así que no hay cuota de renovación estatal. Presentado en línea, la aprobación suele tardar alrededor de un día hábil. Nosotros preparamos y presentamos el trámite por ti.",
+    ],
+    en: [
+      "How much does it cost to start an LLC in Ohio?",
+      "The state fee to file the Articles of Organization with the Ohio Secretary of State is $99. Ohio does not require an annual report, so there is no state renewal fee. Filed online, approval usually takes about one business day. We prepare and file it for you.",
+    ],
+  },
+  {
+    es: [
+      "¿Necesito una vendor's license para vender en Ohio?",
+      "Sí, si vendes productos o servicios sujetos al impuesto sobre ventas de Ohio, ya sea en un local físico o en línea. Es la licencia que te autoriza a cobrar ese impuesto. La solicitud se hace por el Ohio Business Gateway y la cuota es de $25. Te ayudamos a tramitarla y a registrar tus ventas correctamente.",
+    ],
+    en: [
+      "Do I need a vendor's license to sell in Ohio?",
+      "Yes, if you sell goods or services subject to Ohio sales tax, whether from a storefront or online. It is the license that authorizes you to collect that tax. You apply through the Ohio Business Gateway and the fee is $25. We handle the filing and keep your sales recorded correctly.",
+    ],
+  },
+  {
+    es: [
+      "¿Puedo sacar un EIN si no tengo número de Seguro Social?",
+      "Sí. El EIN se solicita con el Formulario SS-4 del IRS y se puede tramitar con ITIN. Si la persona responsable no tiene ni puede obtener un SSN o un ITIN, se escribe «foreign» en la línea 7b y la solicitud se hace por teléfono o fax en lugar de en línea. Te acompañamos en todo el trámite.",
+    ],
+    en: [
+      "Can I get an EIN without a Social Security Number?",
+      "Yes. The EIN is requested on IRS Form SS-4 and can be filed with an ITIN. If the responsible party has no SSN or ITIN and is not eligible for one, you enter “foreign” on line 7b and apply by phone or fax instead of online. We walk you through the whole process.",
+    ],
+  },
+  {
+    es: [
+      "¿Cuántos años debo guardar los documentos de mi negocio?",
+      "La regla general del IRS son tres años a partir de la fecha en que presentaste la declaración. Son seis años si dejaste de reportar más del 25% de tus ingresos brutos, y los registros de impuestos de nómina se guardan al menos cuatro años después de que el impuesto se venció o se pagó. Si nunca presentaste, no hay límite.",
+    ],
+    en: [
+      "How long should I keep my business records?",
+      "The IRS general rule is three years from the date you filed the return. It is six years if you failed to report more than 25% of your gross income, and employment tax records must be kept at least four years after the tax is due or paid. If you never filed a return, there is no limit.",
+    ],
+  },
+  {
+    es: [
+      "¿Necesito llevar contabilidad si trabajo por mi cuenta o recibo 1099?",
+      "Sí. Como contratista independiente reportas tus ingresos y gastos en tu declaración, pagas impuesto de trabajo por cuenta propia y normalmente haces pagos estimados durante el año. Sin registros ordenados pierdes deducciones que sí te corresponden y terminas pagando de más.",
+    ],
+    en: [
+      "Do I need bookkeeping if I am self-employed or get a 1099?",
+      "Yes. As an independent contractor you report your income and expenses on your return, pay self-employment tax and usually make estimated payments during the year. Without organized records you lose deductions you are entitled to and end up paying more than you should.",
+    ],
+  },
+  {
+    es: [
+      "¿Hay contadores que hablen español en Cincinnati?",
+      "Sí. En Mi Conta Universal te atendemos en español y en inglés, por teléfono, WhatsApp o en persona. Damos servicio en Cincinnati y en todo el estado de Ohio, así que también puedes trabajar con nosotros a distancia con tus documentos en digital.",
+    ],
+    en: [
+      "Are there Spanish-speaking accountants in Cincinnati?",
+      "Yes. At Mi Conta Universal we serve you in English and Spanish, by phone, WhatsApp or in person. We cover Cincinnati and the entire state of Ohio, so you can also work with us remotely with your documents in digital form.",
+    ],
+  },
+  {
+    es: [
+      "Ya llevo mi contabilidad en otro lado, ¿puedo cambiarme?",
+      "Sí, y no tienes que esperar al cierre del año. Revisamos cómo están tus registros hoy, ordenamos lo que haga falta y seguimos desde ahí. Solo necesitamos tus estados de cuenta, tus facturas y el acceso a tu sistema actual si usas uno.",
+    ],
+    en: [
+      "I already have someone doing my books. Can I switch?",
+      "Yes, and you do not have to wait until year-end. We review how your records look today, organize whatever needs organizing and continue from there. We just need your bank statements, your invoices and access to your current system if you use one.",
+    ],
+  },
+];
+
+// El texto de este JSON-LD tiene que coincidir con el visible en la pagina.
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "@id": "https://micontau.com/#faq",
+  inLanguage: "es-US",
+  mainEntity: faqs.map((f) => ({
+    "@type": "Question",
+    name: f.es[0],
+    acceptedAnswer: { "@type": "Answer", text: f.es[1] },
+  })),
+};
+---
+<section class={`order-6 ${section} bg-[var(--bg-2)]`} id="preguntas">
+  <div class={container}>
+    <div class="grid items-start gap-10 lg:grid-cols-[0.74fr_1.26fr] lg:gap-14">
+      {/* Micont@U fijo en la columna lateral — solo en pantallas grandes */}
+      <div class="contau-wrap hidden lg:sticky lg:top-[calc(var(--header-h)+40px)] lg:grid lg:justify-items-center">
+        <div class="w-full max-w-[300px] rounded-[28px] border border-[color:var(--border)] bg-[linear-gradient(160deg,#ffffff,var(--bg-3))] p-7 shadow-[var(--shadow)]">
+          <Contau uid="side" />
+        </div>
+      </div>
+
+      <div>
+        <div class="reveal mb-8">
+          <span class={eyebrow} data-en="Frequently asked questions">Preguntas frecuentes</span>
+          <h2 class={h2} data-en="Ask <span class='grad'>Micont@U</span>">Pregúntale a <span class="grad">Micont@U</span></h2>
+          <p class={lead} data-en="Open a question and Micont@U answers it for you.">
+            Abre una pregunta y Micont@U te la responde.
+          </p>
+        </div>
+
+        <div class="grid gap-3">
+          {faqs.map((f, i) => (
+            <details
+              class="faq-item reveal overflow-hidden rounded-2xl border border-[color:var(--border)] bg-white transition open:border-[color:var(--green-500)] open:shadow-[var(--shadow)]"
+              open={i === 0}
+              style={`--reveal-delay:${i * 50}ms`}
+            >
+              <summary
+                class="relative cursor-pointer py-4 pl-5 pr-14 font-[family-name:var(--font-head)] text-[1rem] font-bold text-[var(--navy-900)] sm:pl-6 sm:text-[1.05rem]"
+                data-en={f.en[0]}
+                set:html={f.es[0]}
+              />
+              <div class="flex items-start gap-3 px-4 pb-6 pt-1 sm:gap-5 sm:px-6">
+                <div class="faq-contau w-16 shrink-0 sm:w-20">
+                  <Contau uid={`q${i}`} />
+                </div>
+                <div
+                  class="faq-bubble relative flex-1 rounded-2xl bg-[var(--bg-3)] px-4 py-4 text-[0.94rem] leading-relaxed text-[var(--text)] sm:px-5 sm:text-[0.97rem]"
+                  data-en={f.en[1]}
+                  set:html={f.es[1]}
+                />
+              </div>
+            </details>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="application/ld+json" set:html={JSON.stringify(faqJsonLd)}></script>
+</section>

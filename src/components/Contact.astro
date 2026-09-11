@@ -1,0 +1,116 @@
+---
+import { container, section, eyebrow, h2, lead, btnPrimary, btnWa, btnGhost, inputLabel, input, formStatus } from "../lib/ui";
+
+const servicios = [
+  { es: "Bookkeeping y Contabilidad", en: "Bookkeeping & Accounting" },
+  { es: "Payroll", en: "Payroll" },
+  { es: "Reportes Financieros", en: "Financial Reporting" },
+  { es: "Organización para Impuestos", en: "Tax-Ready Records" },
+  { es: "Asistencia en Auditorías", en: "Audit Support" },
+  { es: "Registro de Negocios", en: "Business Registration" },
+  { es: "Licencias y Permisos", en: "Licenses & Permits" },
+  { es: "Asesoría para Pequeños Negocios", en: "Small Business Consulting" },
+  { es: "Otro / no estoy seguro", en: "Other / not sure" },
+];
+---
+<section class={`order-7 ${section}`} id="contacto">
+  <div class={container}>
+    <div class="reveal mb-11 max-w-[720px]">
+      <span class={eyebrow} data-en="Contact">Contacto</span>
+      <h2 class={h2} data-en="Tell us about your business and <span class='grad'>we will take it from there</span>">
+        Cuéntanos de tu negocio y <span class="grad">nosotros seguimos</span>
+      </h2>
+      <p class={lead} data-en="Write to us and we will get back to you with the next step. No commitment: first we understand what you need.">
+        Escríbenos y te respondemos con el siguiente paso. Sin compromiso:
+        primero entendemos qué necesitas.
+      </p>
+    </div>
+
+    <div class="grid items-start gap-9 lg:grid-cols-[1.1fr_0.9fr]">
+      <form class="reveal rounded-[var(--radius)] border border-[color:var(--border)] bg-white p-7 shadow-[var(--shadow-sm)]" data-w3f="contacto" novalidate>
+        <div class="grid gap-3">
+          <div class="grid gap-3 sm:grid-cols-2">
+            <div class="grid gap-1.5">
+              <label class={inputLabel} for="c-nombre" data-en="Name">Nombre</label>
+              <input class={input} id="c-nombre" name="nombre" type="text" required autocomplete="name" placeholder="Tu nombre" data-en-ph="Your name" />
+            </div>
+            <div class="grid gap-1.5">
+              <label class={inputLabel} for="c-negocio" data-en="Business">Negocio</label>
+              <input class={input} id="c-negocio" name="negocio" type="text" autocomplete="organization" placeholder="Nombre de tu negocio" data-en-ph="Your business name" />
+            </div>
+          </div>
+          <div class="grid gap-3 sm:grid-cols-2">
+            <div class="grid gap-1.5">
+              <label class={inputLabel} for="c-email" data-en="Email">Correo electrónico</label>
+              <input class={input} id="c-email" name="correo" type="email" required autocomplete="email" placeholder="tucorreo@ejemplo.com" data-en-ph="you@example.com" />
+            </div>
+            <div class="grid gap-1.5">
+              <label class={inputLabel} for="c-tel" data-en="Phone">Teléfono</label>
+              <input class={input} id="c-tel" name="telefono" type="tel" autocomplete="tel" placeholder="(513) 000-0000" data-en-ph="(513) 000-0000" />
+            </div>
+          </div>
+          <div class="grid gap-1.5">
+            <label class={inputLabel} for="c-servicio" data-en="What do you need?">¿Qué necesitas?</label>
+            <select class={input} id="c-servicio" name="servicio">
+              {servicios.map((s) => (
+                <option value={s.es} data-en={s.en}>{s.es}</option>
+              ))}
+            </select>
+          </div>
+          <div class="grid gap-1.5">
+            <label class={inputLabel} for="c-mensaje" data-en="Message">Mensaje</label>
+            <textarea class={`${input} min-h-[130px] resize-y`} id="c-mensaje" name="mensaje" placeholder="Cuéntanos brevemente de tu negocio y en qué te podemos ayudar." data-en-ph="Tell us briefly about your business and how we can help."></textarea>
+          </div>
+          <input type="hidden" name="subject" value="Nuevo contacto desde micontau.com" />
+          <label class="hp" aria-hidden="true">No llenar<input type="checkbox" name="botcheck" tabindex="-1" /></label>
+          <button class={`${btnPrimary} w-full`} type="submit" data-en="Send message">Enviar mensaje</button>
+        </div>
+        <div class={`${formStatus} bg-[#e7f7ed] text-[#0a5c2e]`} role="status" aria-live="polite"></div>
+        <p class="mt-3 text-[0.8rem] text-[var(--muted)]" data-en="We reply Monday to Friday, 9 AM to 8 PM Eastern Time.">
+          Respondemos de lunes a viernes, de 9 a. m. a 8 p. m., hora del Este.
+        </p>
+      </form>
+
+      <div class="reveal reveal-right rounded-[var(--radius)] border border-[color:var(--border)] bg-white p-7 shadow-[var(--shadow-sm)]" style="--reveal-delay:120ms">
+        <div class="grid gap-5">
+          <div class="flex items-start gap-3.5">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" class="mt-1 h-5 w-5 shrink-0 text-[var(--green)]" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.09 4.18 2 2 0 0 1 4.08 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92Z"/></svg>
+            <div>
+              <b class="block font-[family-name:var(--font-head)] text-[0.8rem] uppercase tracking-[0.1em] text-[var(--muted)]" data-en="Phone and WhatsApp">Teléfono y WhatsApp</b>
+              <a class="font-semibold text-[var(--navy-900)] hover:text-[var(--green)]" href="tel:+15138270407">+1 (513) 827-0407</a>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-3.5">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" class="mt-1 h-5 w-5 shrink-0 text-[var(--green)]" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+            <div>
+              <b class="block font-[family-name:var(--font-head)] text-[0.8rem] uppercase tracking-[0.1em] text-[var(--muted)]" data-en="Office">Oficina</b>
+              <a class="font-semibold text-[var(--navy-900)] hover:text-[var(--green)]" href="https://maps.google.com/?q=1238+W+Kemper+Rd,+Cincinnati,+OH+45240" target="_blank" rel="noopener">1238 W Kemper Rd<br />Cincinnati, OH 45240</a>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-3.5">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" class="mt-1 h-5 w-5 shrink-0 text-[var(--green)]" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+            <div>
+              <b class="block font-[family-name:var(--font-head)] text-[0.8rem] uppercase tracking-[0.1em] text-[var(--muted)]" data-en="Hours">Horario</b>
+              <span class="font-semibold text-[var(--navy-900)]" data-en="Monday to Friday<br />9:00 AM &ndash; 8:00 PM (Eastern Time)">Lunes a viernes<br />9:00 a. m. &ndash; 8:00 p. m. (hora del Este)</span>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-3.5">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" class="mt-1 h-5 w-5 shrink-0 text-[var(--green)]" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3.6 9h16.8M3.6 15h16.8M12 3a15 15 0 0 1 0 18 15 15 0 0 1 0-18Z"/></svg>
+            <div>
+              <b class="block font-[family-name:var(--font-head)] text-[0.8rem] uppercase tracking-[0.1em] text-[var(--muted)]" data-en="Service area">Zona de servicio</b>
+              <span class="font-semibold text-[var(--navy-900)]" data-en="Cincinnati and all of Ohio">Cincinnati y todo el estado de Ohio</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-7 grid gap-2.5">
+          <a class={`${btnWa} w-full`} href="https://wa.me/15138270407?text=Hola%2C%20quiero%20informaci%C3%B3n%20sobre%20sus%20servicios%20de%20contabilidad." target="_blank" rel="noopener" data-en="Message us on WhatsApp">Escríbenos por WhatsApp</a>
+          <a class={`${btnGhost} w-full`} href="tel:+15138270407" data-en="Call now">Llamar ahora</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

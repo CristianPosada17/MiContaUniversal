@@ -1,0 +1,39 @@
+---
+import { container } from "../lib/ui";
+
+const values = [
+  {
+    icon: '<circle cx="12" cy="12" r="9"/><path d="M3.6 9h16.8M3.6 15h16.8M12 3a15 15 0 0 1 0 18 15 15 0 0 1 0-18Z"/>',
+    es: ["Todo el estado de Ohio", "Presencial o a distancia"],
+    en: ["All of Ohio", "In person or remote"],
+  },
+  {
+    icon: '<path d="m5 8 6 6"/><path d="m4 14 6-6 2-3"/><path d="M2 5h12M7 2h1"/><path d="m22 22-5-10-5 10M14 18h6"/>',
+    es: ["Español e inglés", "Te explicamos a tu modo"],
+    en: ["English &amp; Spanish", "We explain it your way"],
+  },
+  {
+    icon: '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/><path d="M9 15h6M9 11h3"/>',
+    es: ["Todo en un solo lugar", "Contabilidad, nómina y trámites"],
+    en: ["Everything in one place", "Books, payroll and paperwork"],
+  },
+  {
+    icon: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+    es: ["Lunes a viernes, 9 a 20 h", "Hora del Este"],
+    en: ["Mon&ndash;Fri, 9 AM&ndash;8 PM", "Eastern Time"],
+  },
+];
+---
+<section class="order-2 border-b border-[color:var(--border)] bg-[var(--bg-2)] py-8">
+  <div class={`${container} grid grid-cols-2 gap-6 lg:grid-cols-4`}>
+    {values.map((v, i) => (
+      <div class="reveal flex items-center gap-3" style={`--reveal-delay:${i * 90}ms`}>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6 shrink-0 text-[var(--green)]" aria-hidden="true" set:html={v.icon} />
+        <div>
+          <b class="block font-[family-name:var(--font-head)] text-[0.9rem] font-extrabold leading-tight text-[var(--navy-900)]" data-en={v.en[0]} set:html={v.es[0]} />
+          <span class="text-[0.8rem] text-[var(--muted)]" data-en={v.en[1]} set:html={v.es[1]} />
+        </div>
+      </div>
+    ))}
+  </div>
+</section>
