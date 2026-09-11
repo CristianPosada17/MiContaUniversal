@@ -239,6 +239,66 @@ const analyticsBootstrap = [
         });
       })();
 
+      /* ---------- Micont@U sigue el cursor con la mirada ---------- */
+      (function () {
+        // Solo con raton de verdad: en tactil no hay cursor que seguir.
+        if (!matchMedia("(hover: hover) and (pointer: fine)").matches) return;
+        if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+        var MAX = 3.4;      // desplazamiento maximo, en unidades del viewBox (240x205)
+        var ALCANCE = 320;  // px: a esta distancia la mirada ya va al tope
+        var grupos = [];
+
+        function juntar() {
+          grupos = [].slice.call(document.querySelectorAll(".contau")).map(function (svg) {
+            return {
+              svg: svg,
+              ojos: [].slice.call(svg.querySelectorAll(".contau-pupila")).map(function (g) {
+                var c = (g.dataset.ojo || "0,0").split(",");
+                return { g: g, cx: parseFloat(c[0]), cy: parseFloat(c[1]) };
+              }),
+            };
+          });
+        }
+
+        var mx = -1, my = -1, pendiente = false;
+
+        function pintar() {
+          pendiente = false;
+          for (var i = 0; i < grupos.length; i++) {
+            var r = grupos[i].svg.getBoundingClientRect();
+            if (!r.width || r.bottom < -80 || r.top > innerHeight + 80) continue;
+            for (var j = 0; j < grupos[i].ojos.length; j++) {
+              var o = grupos[i].ojos[j];
+              var ex = r.left + (o.cx / 240) * r.width;
+              var ey = r.top + (o.cy / 205) * r.height;
+              var dx = mx - ex, dy = my - ey;
+              var d = Math.sqrt(dx * dx + dy * dy) || 1;
+              var k = Math.min(d / ALCANCE, 1) * MAX;
+              o.g.style.transform =
+                "translate(" + ((dx / d) * k).toFixed(2) + "px," + ((dy / d) * k * 0.78).toFixed(2) + "px)";
+            }
+          }
+        }
+
+        function programar() {
+          if (!pendiente && mx >= 0) { pendiente = true; requestAnimationFrame(pintar); }
+        }
+
+        function centrar() {
+          grupos.forEach(function (gr) {
+            gr.ojos.forEach(function (o) { o.g.style.transform = ""; });
+          });
+          mx = -1;
+        }
+
+        juntar();
+        addEventListener("mousemove", function (e) { mx = e.clientX; my = e.clientY; programar(); }, { passive: true });
+        addEventListener("scroll", programar, { passive: true });
+        addEventListener("resize", programar, { passive: true });
+        document.addEventListener("mouseleave", centrar);
+      })();
+
       /* ---------- Modal de confirmacion de la guia ---------- */
       (function () {
         var modal = document.getElementById("guia-modal");

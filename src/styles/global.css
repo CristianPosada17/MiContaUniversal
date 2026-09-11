@@ -104,6 +104,7 @@ h1, h2, h3, h4 { font-family: var(--font-head); letter-spacing: -0.02em; }
 
 .contau { display: block; width: 100%; height: auto; animation: contau-float 5s ease-in-out infinite; transform-origin: 50% 85%; }
 .contau .contau-eyes { animation: contau-blink 6s infinite; transform-origin: center; }
+.contau .contau-pupila { transition: transform 0.14s ease-out; will-change: transform; }
 @keyframes contau-blink {
   0%, 92%, 100% { transform: scaleY(1); }
   95% { transform: scaleY(0.08); }
@@ -197,5 +198,6 @@ body.modal-abierto { overflow: hidden; }
     transition: none !important;
   }
   .contau, .contau .contau-eyes, .faq-bubble, .modal-panel, .wa-float::before { animation: none !important; }
+  .contau .contau-pupila { transform: none !important; transition: none !important; }
   html { scroll-behavior: auto; }
 }
