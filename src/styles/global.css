@@ -47,6 +47,8 @@
 html {
   scroll-behavior: smooth;
   scroll-padding-top: calc(var(--header-h) + 12px);
+  /* Las animaciones que entran desde la derecha no deben ensanchar la pagina en movil */
+  overflow-x: clip;
 }
 
 body {
@@ -190,6 +192,21 @@ body.modal-abierto { overflow: hidden; }
 .form-status { display: none; }
 .form-status.is-ok,
 .form-status.is-error { display: block; }
+
+/* ---------- Paginas legales ---------- */
+
+.legal h2 {
+  margin-top: 2.4rem;
+  margin-bottom: 0.7rem;
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--navy-900);
+}
+.legal p, .legal ul { margin-top: 0.85rem; color: var(--text); }
+.legal ul { padding-left: 1.3rem; list-style: disc; }
+.legal li { margin-top: 0.4rem; }
+.legal li::marker { color: var(--green-500); }
+.legal a { color: var(--green); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
 
 @media (prefers-reduced-motion: reduce) {
   .reveal, .reveal-left, .reveal-right, .reveal-scale {

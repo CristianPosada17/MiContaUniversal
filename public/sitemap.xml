@@ -9,4 +9,20 @@
     <xhtml:link rel="alternate" hreflang="en-us" href="https://micontau.com/?lang=en"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://micontau.com/"/>
   </url>
+  <url>
+    <loc>https://micontau.com/privacidad</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="es-us" href="https://micontau.com/privacidad"/>
+    <xhtml:link rel="alternate" hreflang="en-us" href="https://micontau.com/privacidad?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://micontau.com/privacidad"/>
+  </url>
+  <url>
+    <loc>https://micontau.com/terminos</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="es-us" href="https://micontau.com/terminos"/>
+    <xhtml:link rel="alternate" hreflang="en-us" href="https://micontau.com/terminos?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://micontau.com/terminos"/>
+  </url>
 </urlset>

@@ -1,11 +1,19 @@
 ---
 import "../styles/global.css";
+import ConsentBanner from "../components/ConsentBanner.astro";
 
 const {
   title = "Contabilidad y Asesoria para Negocios en Cincinnati, Ohio | Mi Conta Universal",
   description = "Contabilidad, nomina, reportes financieros y asesoria para pequenos negocios en Cincinnati y en todo Ohio. Te atendemos en espanol e ingles. Llama o escribe por WhatsApp al (513) 827-0407.",
   image = "/og-image.jpg",
+  // Las paginas internas pasan su ruta y su titulo en ingles; el script de
+  // idioma los usa al cambiar de ES a EN.
+  path = "/",
+  titleEn = "Bookkeeping & Business Consulting in Cincinnati, Ohio | Mi Conta Universal",
+  descriptionEn = "Bookkeeping, payroll, financial reporting and consulting for small businesses in Cincinnati and across Ohio. We serve you in English and Spanish.",
 } = Astro.props;
+
+const pageUrl = new URL(path, "https://micontau.com").href;
 
 // Se llenan cuando el cliente entregue las cuentas. Vacios = no cargan.
 const GA_MEASUREMENT_ID = "";
@@ -57,18 +65,23 @@ const jsonLd = {
   ],
 };
 
+// Consentimiento: concedido por defecto (sitio para EE. UU.) salvo que la
+// persona haya rechazado en el aviso de cookies (ConsentBanner.astro).
+const consentBootstrap = `var mcuConsent='granted';try{if(localStorage.getItem('mcu-consent')==='denied')mcuConsent='denied'}catch(e){}`;
+
 const analyticsBootstrap = [
+  (GA_MEASUREMENT_ID || META_PIXEL_ID) && consentBootstrap,
   GA_MEASUREMENT_ID &&
-    `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','${GA_MEASUREMENT_ID}');`,
+    `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('consent','default',{ad_storage:mcuConsent,ad_user_data:mcuConsent,ad_personalization:mcuConsent,analytics_storage:mcuConsent});gtag('js',new Date());gtag('config','${GA_MEASUREMENT_ID}');`,
   META_PIXEL_ID &&
-    `!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','${META_PIXEL_ID}');fbq('track','PageView');`,
+    `!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');if(mcuConsent==='denied')fbq('consent','revoke');fbq('init','${META_PIXEL_ID}');fbq('track','PageView');`,
 ]
   .filter(Boolean)
   .join("\n");
 ---
 
 <!doctype html>
-<html lang="es">
+<html lang="es" data-title-es={title} data-title-en={titleEn} data-desc-es={description} data-desc-en={descriptionEn}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -80,16 +93,16 @@ const analyticsBootstrap = [
     />
     <meta name="robots" content="index, follow" />
     <meta name="theme-color" content="#062748" />
-    <link rel="canonical" href="https://micontau.com/" />
-    <link rel="alternate" hreflang="es-us" href="https://micontau.com/" />
-    <link rel="alternate" hreflang="en-us" href="https://micontau.com/?lang=en" />
-    <link rel="alternate" hreflang="x-default" href="https://micontau.com/" />
+    <link rel="canonical" href={pageUrl} />
+    <link rel="alternate" hreflang="es-us" href={pageUrl} />
+    <link rel="alternate" hreflang="en-us" href={`${pageUrl}?lang=en`} />
+    <link rel="alternate" hreflang="x-default" href={pageUrl} />
 
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Mi Conta Universal" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:url" content="https://micontau.com/" />
+    <meta property="og:url" content={pageUrl} />
     <meta property="og:image" content={image} />
     <meta property="og:locale" content="es_US" />
     <meta property="og:locale:alternate" content="en_US" />
@@ -115,21 +128,11 @@ const analyticsBootstrap = [
   </head>
   <body>
     <slot />
+    <ConsentBanner />
 
     <script is:inline>
       /* ---------- Idioma ES / EN ---------- */
       (function () {
-        var META = {
-          es: {
-            title: "Contabilidad y Asesoria para Negocios en Cincinnati, Ohio | Mi Conta Universal",
-            desc: "Contabilidad, nomina, reportes financieros y asesoria para pequenos negocios en Cincinnati y en todo Ohio. Te atendemos en espanol e ingles.",
-          },
-          en: {
-            title: "Bookkeeping & Business Consulting in Cincinnati, Ohio | Mi Conta Universal",
-            desc: "Bookkeeping, payroll, financial reporting and consulting for small businesses in Cincinnati and across Ohio. We serve you in English and Spanish.",
-          },
-        };
-
         function apply(lang) {
           var isEn = lang === "en";
           document.documentElement.lang = isEn ? "en" : "es";
@@ -147,17 +150,22 @@ const analyticsBootstrap = [
             el.setAttribute("aria-label", isEn ? el.dataset.enAria : el.dataset.esAria);
           });
 
-          var m = META[isEn ? "en" : "es"];
-          document.title = m.title;
+          // Bloques largos (paginas legales) se escriben completos en cada idioma
+          document.querySelectorAll("[data-only]").forEach(function (el) {
+            el.hidden = el.dataset.only !== (isEn ? "en" : "es");
+          });
+
+          var root = document.documentElement.dataset;
+          document.title = isEn ? root.titleEn : root.titleEs;
           var d = document.querySelector('meta[name="description"]');
-          if (d) d.setAttribute("content", m.desc);
+          if (d) d.setAttribute("content", isEn ? root.descEn : root.descEs);
 
           document.querySelectorAll("[data-lang]").forEach(function (b) {
             var on = b.dataset.lang === (isEn ? "en" : "es");
             b.setAttribute("aria-pressed", String(on));
             b.className = on
-              ? "rounded-full px-3 py-1.5 font-[family-name:var(--font-head)] text-[0.76rem] font-extrabold tracking-wider text-white transition bg-[linear-gradient(120deg,var(--navy),var(--green))]"
-              : "rounded-full px-3 py-1.5 font-[family-name:var(--font-head)] text-[0.76rem] font-extrabold tracking-wider text-[var(--muted)] transition hover:text-[var(--navy)]";
+              ? "rounded-full px-2.5 py-1.5 sm:px-3 font-[family-name:var(--font-head)] text-[0.76rem] font-extrabold tracking-wider text-white transition bg-[linear-gradient(120deg,var(--navy),var(--green))]"
+              : "rounded-full px-2.5 py-1.5 sm:px-3 font-[family-name:var(--font-head)] text-[0.76rem] font-extrabold tracking-wider text-[var(--muted)] transition hover:text-[var(--navy)]";
           });
 
           try { localStorage.setItem("mcu-lang", isEn ? "en" : "es"); } catch (e) {}
@@ -378,6 +386,9 @@ const analyticsBootstrap = [
             data.from_name = "micontau.com";
             // Para poder responderle directo al visitante desde el correo
             if (data.correo) data.replyto = data.correo;
+            // Autorespuesta de Web3Forms (Pro): solo lee el campo "email".
+            // Se agrega solo en la guia para que el formulario de contacto no dispare el envio.
+            if (form.dataset.w3f === "guia_gratuita" && data.correo) data.email = data.correo;
             data.idioma_del_visitante = lang;
 
             fetch("https://api.web3forms.com/submit", {

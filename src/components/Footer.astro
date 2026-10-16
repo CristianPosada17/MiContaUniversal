@@ -1,12 +1,15 @@
 ---
 import { container } from "../lib/ui";
 
+// En las paginas internas los anclajes tienen que regresar al inicio.
+const home = Astro.url.pathname === "/" ? "" : "/";
+
 const links = [
-  { href: "#servicios", es: "Servicios", en: "Services" },
-  { href: "#nosotros", es: "Nosotros", en: "About us" },
-  { href: "#guia", es: "Guía gratuita", en: "Free guide" },
-  { href: "#preguntas", es: "Preguntas", en: "FAQ" },
-  { href: "#contacto", es: "Contacto", en: "Contact" },
+  { href: home + "#servicios", es: "Servicios", en: "Services" },
+  { href: home + "#nosotros", es: "Nosotros", en: "About us" },
+  { href: home + "#guia", es: "Guía gratuita", en: "Free guide" },
+  { href: home + "#preguntas", es: "Preguntas", en: "FAQ" },
+  { href: home + "#contacto", es: "Contacto", en: "Contact" },
 ];
 ---
 <footer class="bg-[var(--navy-900)] pb-24 pt-14 text-white/70 sm:pb-10">
@@ -50,6 +53,11 @@ const links = [
   <div class={container}>
     <div class="mt-10 flex flex-wrap justify-between gap-2.5 border-t border-white/10 pt-5 text-[0.82rem] text-white/55">
       <span>&copy; 2026 Mi Conta Universal. <span data-en="All rights reserved.">Todos los derechos reservados.</span></span>
+      <span class="flex flex-wrap gap-x-5 gap-y-1">
+        <a href="/privacidad" data-en="Privacy Policy" class="transition hover:text-[var(--green-500)]">Política de privacidad</a>
+        <a href="/terminos" data-en="Terms and Conditions" class="transition hover:text-[var(--green-500)]">Términos y condiciones</a>
+        <button type="button" data-consent-open data-en="Cookie preferences" class="transition hover:text-[var(--green-500)]">Preferencias de cookies</button>
+      </span>
       <span>
         <span data-en="Website developed by">Sitio desarrollado por</span>{" "}
         <a
@@ -57,7 +65,7 @@ const links = [
           target="_blank"
           rel="noopener"
           class="font-bold text-white transition hover:text-[var(--green-500)]"
-        >ProCode</a>
+        >ProCode Systems</a>
       </span>
     </div>
   </div>

@@ -1,0 +1,89 @@
+---
+// Aviso de cookies y terminos, mismo patron que el de procodedev.com.
+// Aparece una sola vez hasta que hay decision; la decision se guarda en
+// localStorage ("mcu-consent") y se propaga a Google y Meta si estan cargados.
+// En EE. UU. la medicion arranca concedida (ver Layout.astro): el aviso
+// informa y permite salirse. Se reabre desde "Preferencias de cookies".
+---
+<div
+  id="mcu-consent"
+  hidden
+  data-open="false"
+  role="dialog"
+  aria-live="polite"
+  aria-label="Aviso de cookies"
+  data-en-aria="Cookie notice"
+  class="fixed inset-x-0 bottom-0 z-[60] mb-[calc(env(safe-area-inset-bottom)+84px)] translate-y-4 px-3 opacity-0 transition-all duration-300 data-[open=true]:translate-y-0 data-[open=true]:opacity-100 sm:mb-5 sm:left-5 sm:right-auto sm:max-w-md sm:px-0"
+>
+  <div class="rounded-[var(--radius)] border border-[color:var(--border-strong)] bg-white/95 p-5 shadow-[var(--shadow-lg)] backdrop-blur-xl">
+    <p class="font-[family-name:var(--font-head)] text-[0.95rem] font-extrabold text-[var(--navy-900)]" data-en="Cookies and privacy">Cookies y privacidad</p>
+    <p
+      class="mt-2 text-[0.84rem] leading-6 text-[var(--muted)] [&_a]:font-semibold [&_a]:text-[var(--green)] [&_a]:underline [&_a]:underline-offset-2"
+      data-en="We use cookies, including Google's and Meta's, to understand how the site is used and improve it. By using this site you agree to our <a href='/terminos'>Terms and Conditions</a> and our <a href='/privacidad'>Privacy Policy</a>. You can accept or decline analytics cookies; the site works the same either way."
+    >
+      Usamos cookies, incluidas las de Google y Meta, para entender cómo se usa el sitio y mejorarlo. Al usar
+      este sitio aceptas nuestros <a href="/terminos">Términos y condiciones</a> y nuestra
+      <a href="/privacidad">Política de privacidad</a>. Puedes aceptar o rechazar las cookies de medición;
+      el sitio funciona igual en ambos casos.
+    </p>
+    <div class="mt-4 flex gap-2.5">
+      <button
+        type="button"
+        data-consent="granted"
+        class="inline-flex min-h-[42px] flex-1 items-center justify-center rounded-xl bg-[linear-gradient(120deg,var(--navy),var(--green))] px-4 font-[family-name:var(--font-head)] text-[0.88rem] font-bold text-white transition hover:-translate-y-0.5"
+        data-en="Accept"
+      >Aceptar</button>
+      <button
+        type="button"
+        data-consent="denied"
+        class="inline-flex min-h-[42px] flex-1 items-center justify-center rounded-xl border border-[color:var(--border-strong)] bg-white px-4 font-[family-name:var(--font-head)] text-[0.88rem] font-bold text-[var(--navy)] transition hover:border-[color:var(--green-500)] hover:text-[var(--green)]"
+        data-en="Decline"
+      >Rechazar</button>
+    </div>
+  </div>
+</div>
+
+<script is:inline>
+  (function () {
+    var STORE = "mcu-consent";
+    var el = document.getElementById("mcu-consent");
+    if (!el) return;
+
+    function guardada() {
+      try { return localStorage.getItem(STORE); } catch (e) { return null; }
+    }
+
+    function aplicar(valor) {
+      if (window.gtag) {
+        window.gtag("consent", "update", {
+          ad_storage: valor,
+          ad_user_data: valor,
+          ad_personalization: valor,
+          analytics_storage: valor,
+        });
+      }
+      if (window.fbq) window.fbq("consent", valor === "granted" ? "grant" : "revoke");
+      try { localStorage.setItem(STORE, valor); } catch (e) {}
+    }
+
+    function abrir() {
+      el.hidden = false;
+      // Forzar el layout para que la transicion arranque desde el estado oculto
+      void el.offsetWidth;
+      el.setAttribute("data-open", "true");
+    }
+
+    function cerrar() {
+      el.setAttribute("data-open", "false");
+      setTimeout(function () { el.hidden = true; }, 300);
+    }
+
+    document.addEventListener("click", function (e) {
+      var b = e.target.closest("[data-consent]");
+      if (b) { aplicar(b.dataset.consent); cerrar(); return; }
+      if (e.target.closest("[data-consent-open]")) { e.preventDefault(); abrir(); }
+    });
+
+    if (!guardada()) abrir();
+  })();
+</script>
